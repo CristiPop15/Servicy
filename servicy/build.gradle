@@ -18,11 +18,38 @@ group = 'com.servicy'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+
+ext {
+    deployDir = 'config/deploy'
+    resourcesDir = 'config/resources'
+    propertiesDir = 'config/properties'
+    testPropertiesDir = 'config/test'
+    schemaDir = projectDir.path + "/schema"
+}
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+	compile group: 'org.postgresql', name: 'postgresql', version:'42.2.4'
+	compile group: 'org.flywaydb', name: 'flyway-core', version: '5.2.0'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+}
+
+/*
+ * New migration script
+ */
+task migrateNew() {
+	description "MyBatis migration new"
+	doLast {
+		if (project.hasProperty("desc")) {
+			def newFile = migrateNew("${schemaDir}/scripts", desc)
+			println "New migrate script: ${newFile}"
+		} else {
+			throw new InvalidUserDataException("Please specify the -Pdesc parameter")
+		}
+	}
 }
