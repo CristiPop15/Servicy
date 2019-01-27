@@ -4,15 +4,24 @@ env: flex
 env_variables:
   SPRING_PROFILES_ACTIVE: "prod"
 
-liveness_check:
-  path: "/actuator/health"
-  check_interval_sec: 30
-  timeout_sec: 30
-  failure_threshold: 2
-  success_threshold: 2
+manual_scaling:
+  instances: 3
+
+resources:
+  memory_gb: 4
+
+beta_settings:
+  cloud_sql_instances: servicy-demo:europe-west3:servicy-db
 
 runtime_config: # Optional
   jdk: openjdk8
+
+health_check:
+  enable_health_check: True
+  check_interval_sec: 5
+  timeout_sec: 4
+  unhealthy_threshold: 2
+  healthy_threshold: 2
 
 handlers:
   - url: /.*

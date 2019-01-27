@@ -21,9 +21,9 @@ spring:
     - prod
   datasource:
     driverClassName: 'org.postgresql.Driver'
-    url: 'jdbc:postgresql://35.189.240.216:5432/postgres'
+    url: 'jdbc:postgresql://35.246.209.154:5432/postgres'
     username: 'postgres'
-    password: 'postgrespw'
+    password: 'servicypw'
   flyway:
     enabled: true
     outOfOrder: true

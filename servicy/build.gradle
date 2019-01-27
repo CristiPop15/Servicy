@@ -1,21 +1,24 @@
 buildscript {
 	ext {
 		springBootVersion = '2.1.2.RELEASE'
+		appEngineVersion = '1.3.5'
 	}
 	repositories {
 		mavenCentral()
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("com.google.cloud.tools:appengine-gradle-plugin:${appEngineVersion}")
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.google.cloud.tools.appengine'
 
 group = 'com.servicy'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.1'
 sourceCompatibility = '1.8'
 
 
@@ -24,7 +27,7 @@ ext {
     resourcesDir = 'config/resources'
     propertiesDir = 'config/properties'
     testPropertiesDir = 'config/test'
-    schemaDir = projectDir.path + "/schema"
+    schemaDir = projectDir.path + "/src/main/resources"
 }
 
 repositories {
@@ -33,7 +36,7 @@ repositories {
 
 dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-	compile group: 'org.postgresql', name: 'postgresql', version:'42.2.4'
+	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 	compile group: 'org.flywaydb', name: 'flyway-core', version: '5.2.0'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
 	compile("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -43,11 +46,13 @@ dependencies {
  * New migration script
  */
 task migrateNew() {
-	description "MyBatis migration new"
+	description "Migration file for new tables"
 	doLast {
 		if (project.hasProperty("desc")) {
-			def newFile = migrateNew("${schemaDir}/scripts", desc)
-			println "New migrate script: ${newFile}"
+			def date = new Date()
+			def formattedDate = date.format('yyMMddHHmmss')
+			boolean created = new File("${schemaDir}/db/migrations" + "\\V" + version + formattedDate + "__" + desc + ".sql").createNewFile()
+			println "New migrate script created: ${created}"
 		} else {
 			throw new InvalidUserDataException("Please specify the -Pdesc parameter")
 		}
