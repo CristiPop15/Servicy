@@ -5,7 +5,7 @@ env_variables:
   SPRING_PROFILES_ACTIVE: "prod"
 
 manual_scaling:
-  instances: 3
+  instances: 2
 
 resources:
   memory_gb: 4
