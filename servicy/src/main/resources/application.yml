@@ -7,9 +7,11 @@ spring:
     - default
   datasource:
     driverClassName: 'org.postgresql.Driver'
-    url: 'jdbc:postgresql://localhost:5433/shipit'
+    url: 'jdbc:postgresql://localhost:5433/servicy'
     username: 'postgres'
     password: 'postgres'
+    pool:
+      size: 10
   flyway:
     enabled: true
     outOfOrder: true
@@ -24,6 +26,8 @@ spring:
     url: 'jdbc:postgresql://35.246.209.154:5432/postgres'
     username: 'postgres'
     password: 'servicypw'
+    pool:
+      size: 10
   flyway:
     enabled: true
     outOfOrder: true

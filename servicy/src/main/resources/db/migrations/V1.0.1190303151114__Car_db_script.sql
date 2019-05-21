@@ -3,16 +3,16 @@
 -- `Demo here: https://databases.one/cardatabase-demo-advanced/`
 --
 
-CREATE TABLE IF NOT EXISTS `car_makes` (
-  `make_id` int(11) NOT NULL,
-  `make` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS servicy.car_makes (
+  make_id int NOT NULL,
+  make varchar(255) NOT NULL
+);
 
 --
 -- `car_makes_2008_2018`
 --
 
-INSERT INTO `car_makes` (`make_id`, `make`) VALUES
+INSERT INTO servicy.car_makes (make_id, make) VALUES
 (1, 'AC'),
 (2, 'Acura'),
 (3, 'Alfa Romeo'),
@@ -188,27 +188,25 @@ INSERT INTO `car_makes` (`make_id`, `make`) VALUES
 (193, 'Zotye'),
 (175, 'ZX');
 
-ALTER TABLE `car_makes`
-  ADD PRIMARY KEY (`make_id`), ADD UNIQUE KEY `make` (`make`);
-
-ALTER TABLE `car_makes`
-  MODIFY `make_id` int(11) NOT NULL;
+ALTER TABLE servicy.car_makes
+  ADD PRIMARY KEY (make_id),
+  ADD CONSTRAINT make UNIQUE (make);
 
 --
 -- `https://databases.one`
 --
 
-CREATE TABLE IF NOT EXISTS `car_models` (
-  `model_id` int(11) NOT NULL,
-  `model` varchar(255) NOT NULL,
-  `make_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS servicy.car_models (
+  model_id int NOT NULL,
+  model varchar(255) NOT NULL,
+  make_id int NOT NULL
+);
 
 --
 -- `car_models_2008_2018`
 --
 
-INSERT INTO `car_models` (`model_id`, `model`, `make_id`) VALUES
+INSERT INTO servicy.car_models (model_id, model, make_id) VALUES
 (3, 'Cobra', 1),
 (1844, '378 GT Zagato', 1),
 (7, 'MDX', 2),
@@ -1793,8 +1791,6 @@ INSERT INTO `car_models` (`model_id`, `model`, `make_id`) VALUES
 (2735, 'Haise', 242),
 (2903, 'Air Concept', 245);
 
-ALTER TABLE `car_models`
-  ADD PRIMARY KEY (`model_id`), ADD UNIQUE KEY `model_make` (`model_id`,`make_id`);
-
-ALTER TABLE `car_models`
-  MODIFY `model_id` int(11) NOT NULL;
+ALTER TABLE servicy.car_models
+  ADD PRIMARY KEY (model_id),
+  ADD CONSTRAINT model_make UNIQUE (model_id, make_id);
